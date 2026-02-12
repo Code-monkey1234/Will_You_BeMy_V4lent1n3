@@ -1,5 +1,6 @@
 let isTyping = false;
-const typingSpeed = 45;
+const typingSpeed = 45; 
+
 
 const questions = [
   {
@@ -9,93 +10,160 @@ const questions = [
   },
   {
     text: "Let me make sure I’m picturing you right.\nWhat feels most like you?",
-    choices: ["Calm and thoughtful", "Loud and playful", "Soft but strong", "A mix of everything"],
+    choices: [
+      "Calm and thoughtful",
+      "Loud and playful",
+      "Soft but strong",
+      "A mix of everything"
+    ],
     background: "img/2nd_image.png"
   },
   {
     text: "On a tired day, what do you crave more?",
-    choices: ["Quiet company", "A long conversation", "Laughing it off", "Being understood without talking"],
+    choices: [
+      "Quiet company",
+      "A long conversation",
+      "Laughing it off",
+      "Being understood without talking",
+      "Drinks / snacks while watching yt/movies",
+      "Sleeping",
+      "Playing games"
+    ],
     background: "img/3rdMassive stones at side.png"
   },
   {
     text: "When someone cares about you, what makes it feel real?",
-    choices: ["They remember small details", "They spend time with you", "They say it out loud", "They show up when it counts"],
+    choices: [
+      "They remember small details",
+      "They spend time with you",
+      "They say it out loud",
+      "They show up when it counts",
+      "They make me feel seen when I feel alone"
+    ],
     background: "img/4thStatue.png"
   },
   {
     text: "Whats your primary love language?",
-    choices: ["Acts of service", "Quality time", "Receiving gifts", "Physical touch", "Words of affirmation"],
+    choices: [
+      "Acts of service",
+      "Quality time",
+      "Receiving gifts",
+      "Physical touch",
+      "Words of affirmation"
+    ],
     background: "img/5thruins.png"
   },
   {
     text: "What’s a simple thing that always makes your heart feel light?",
-    choices: ["Laughing together", "Watching the sunset", "A kind message", "Just being there for you", "Having someone to ramble to and listen to me", "Someone protecting me", "A hug"],
+    choices: [
+      "Laughing together",
+      "Watching the sunset",
+      "A kind message",
+      "Just being there for you",
+      "Head pats",
+      "Having someone to ramble to and listen to me",
+      "Someone protecting me",
+      "A hug"
+    ],
     background: "img/6thBentTree.png"
   },
   {
     text: "If your perfect day had a color, which would it be?",
-    choices: ["Soft pink", "Warm gold", "Deep purple", "Cool blue"],
+    choices: [
+      "Soft pink",
+      "Warm gold",
+      "Deep purple",
+      "Cool blue"
+    ],
     background: "img/7thwaterfalls.png"
   },
   {
     text: "If you could go out and adventure, which experience would you like to experience?",
-    choices: ["Stargazing at night", "Camping in the woods", "Sailing out to the sea", "Mountain climbing", "Exploring waterfalls", "Hot air balloon"],
+    choices: [
+      "Stargazing at night",
+      "Camping in the woods",
+      "Sailing out to the sea",
+      "Mountain climbing",
+      "Exploring waterfalls",
+      "Hot air balloon"
+    ],
     background: "img/8thpath with even stones.png"
   },
   {
     text: "Which of these makes you truly feel seen?",
-    choices: ["Listening", "Actions", "Shared silences", "Remembering the little things", "All of the above"],
+    choices: [
+      "Listening",
+      "Actions",
+      "Shared silences",
+      "Remembering the little things",
+      "All of the above"
+    ],
     background: "img/9th_image.png"
   },
   {
     text: "How would you like someone to interact with you so you feel truly seen and understood?",
-    choices: ["Listening carefully, even in silence", "Remembering small details about me", "Giving space but still being present", "Showing care through thoughtful actions", "All of the above"],
+    choices: [
+      "Listening carefully, even in silence",
+      "Remembering small details about me",
+      "Giving space but still being present",
+      "Showing care through thoughtful actions",
+      "All of the above"
+    ],
     background: "img/10seaofcloud and mountain top.png"
   },
   {
-    text: "We’ve wandered together through this forest, shared little moments, and discovered pieces of what makes you, you.",
-    choices: ["..."],
-    background: "img/10seaofcloud and mountain top.png"
-  },
+  text: "We’ve wandered together through this forest, shared little moments, and discovered pieces of what makes you, you.",
+  choices: [
+    "..."
+  ],
+  background: "img/10seaofcloud and mountain top.png"
+},
   {
-    text: "Each choice you made paints a picture I can’t stop thinking about.\n\nEvery answer you gave helped me understand you.",
-    choices: ["..."],
-    background: "img/10seaofcloud and mountain top.png"
-  },
-  {
-    text: "So…\nWill you be my Valentine?",
-    choices: ["Yes", "No"],
-    background: "img/10seaofcloud and mountain top.png"
-  }
+  text: "Each choice you made paints a picture I can’t stop thinking about.\n\n\nEvery answer you gave helped me understand you.",
+  choices: [
+    "..."
+  ],
+  background: "img/10seaofcloud and mountain top.png"
+},
+{
+  text: "So…\nWill you be my Valentine?",
+  choices: [
+    "Yes",
+    "No",
+  ],
+  background: "img/10seaofcloud and mountain top.png"
+}
+
 ];
 
-// DOM elements
-const questionEl = document.getElementById("question");
-const choicesEl = document.getElementById("choices");
-const contentEl = document.getElementById("content");
-const bgEl = document.getElementById("bg");
+
+
+function changeBackground(imagePath) {
+  document.body.style.backgroundImage = `url("${imagePath}")`;
+}
+
 
 let currentQuestion = 0;
 
-// Preload image
-function preloadImage(src, callback) {
-  const img = new Image();
-  img.src = src;
-  img.onload = callback;
-}
+const questionEl = document.getElementById("question");
+const choicesEl = document.getElementById("choices");
+const contentEl = document.getElementById("content");
 
-// Smooth background change
-function changeBackground(imagePath) {
-  bgEl.style.opacity = 0;
-  preloadImage(imagePath, () => {
-    setTimeout(() => {
-      bgEl.style.backgroundImage = `url("${imagePath}")`;
-      bgEl.style.opacity = 1;
-    }, 300);
+function showQuestion() {
+  const question = questions[currentQuestion];
+
+  changeBackground(question.background);
+
+  questionEl.innerText = "";
+  choicesEl.innerHTML = "";
+  isTyping = true;
+
+  typeText(questionEl, question.text, () => {
+    isTyping = false;
+    showChoices(question.choices);
   });
 }
 
-// Type text letter by letter
 function typeText(element, text, callback) {
   let index = 0;
   element.innerText = "";
@@ -105,67 +173,59 @@ function typeText(element, text, callback) {
       element.innerText += text.charAt(index);
       index++;
       setTimeout(type, typingSpeed);
-    } else if (callback) {
-      callback();
+    } else {
+      if (callback) callback();
     }
   }
 
   type();
 }
 
-// Show question
-function showQuestion() {
-  const question = questions[currentQuestion];
-  changeBackground(question.background);
-  questionEl.innerText = "";
-  choicesEl.innerHTML = "";
-  isTyping = true;
-  typeText(questionEl, question.text, () => {
-    isTyping = false;
-    showChoices(question.choices);
-  });
-}
-
-// Show choices
 function showChoices(choices) {
-  choicesEl.innerHTML = "";
+  choicesEl.innerHTML = ""; // clear previous choices
   choicesEl.style.position = "relative";
 
   choices.forEach(choice => {
     const btn = document.createElement("button");
     btn.innerText = choice;
 
-    // Last question behavior
+    // LAST QUESTION SPECIAL CASE
     if (currentQuestion === questions.length - 1) {
       if (choice.toLowerCase() === "yes") {
         btn.onclick = () => {
-          contentEl.classList.add("fade-out");
-          setTimeout(() => {
-            questionEl.innerText = "";
-            choicesEl.innerHTML = "";
+      contentEl.classList.add("fade-out");
 
-            changeBackground("img/Final_Img.jpg");
+      setTimeout(() => {
+        questionEl.innerText = "";
+        choicesEl.innerHTML = "";
 
-            const loveMsg = document.createElement("div");
-            loveMsg.style.fontSize = "14px";
-            loveMsg.style.color = "#ffc6d3";
-            loveMsg.style.whiteSpace = "pre-wrap";
-            loveMsg.style.textAlign = "center";
-            loveMsg.style.display = "flex";
-            loveMsg.style.flexDirection = "column";
-            loveMsg.style.justifyContent = "center";
-            loveMsg.style.alignItems = "center";
-            loveMsg.style.minHeight = "200px";
-            contentEl.appendChild(loveMsg);
+        changeBackground("img/Final_Img.jpg");
 
-            const finalText = "YIPPIE!\nTo be honest...I didn't like you because you were this or that, it's simply because I choose you...\nEveryday, every second, every moment I can't stop thinking about you\nThank you [Name]";
+        const loveMsg = document.createElement("div");
+        loveMsg.style.fontSize = "14px";
+        loveMsg.style.color = "#ffc6d3";
+        loveMsg.style.whiteSpace = "pre-wrap";
+        loveMsg.style.lineHeight = "25px";
+        loveMsg.style.letterSpacing = "4px";
+        loveMsg.style.textAlign = "center";
+        loveMsg.style.display = "flex";
+        loveMsg.style.flexDirection = "column";
+        loveMsg.style.justifyContent = "center";
+        loveMsg.style.alignItems = "center";
+        loveMsg.style.minHeight = "200px";
+        contentEl.appendChild(loveMsg);
 
-            typeText(loveMsg, finalText);
-            contentEl.classList.remove("fade-out");
-          }, 600);
-        };
-      } else {
-        // "No" button moves away
+        const finalText = "YIPPIE!\nTo be honest...I didn't like you because you were this or that, it's simply because I choose you...\nEveryday, every second, every moment I can't stop thinking about you\nThank you [Name]";
+
+        // Type it into loveMsg
+        typeText(loveMsg, finalText);
+
+        contentEl.classList.remove("fade-out");
+      }, 600);
+    };
+
+      } else if (choice.toLowerCase() === "no") {
+        // make No button move and fade away
         btn.style.position = "fixed";
         btn.style.left = "50%";
         btn.style.top = "50%";
@@ -190,6 +250,7 @@ function showChoices(choices) {
         };
 
         document.addEventListener('mousemove', escapeHandler);
+
         btn.onclick = () => {
           btn.style.opacity = 0;
           setTimeout(() => btn.remove(), 500);
@@ -197,7 +258,7 @@ function showChoices(choices) {
         };
       }
     } else {
-      // Normal question
+      // regular buttons for non-last questions
       btn.onclick = () => {
         if (!isTyping) nextQuestion();
       };
@@ -207,9 +268,11 @@ function showChoices(choices) {
   });
 }
 
-// Next question
+
+
 function nextQuestion() {
   contentEl.classList.add("fade-out");
+
   setTimeout(() => {
     currentQuestion++;
     if (currentQuestion < questions.length) {
@@ -219,5 +282,4 @@ function nextQuestion() {
   }, 600);
 }
 
-// Start
 showQuestion();
