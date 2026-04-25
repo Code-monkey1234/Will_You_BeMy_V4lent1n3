@@ -1,5 +1,5 @@
 let isTyping = false;
-const typingSpeed = 45; 
+const typingSpeed = 1000; 
 
 
 const questions = [
